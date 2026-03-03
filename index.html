@@ -28,30 +28,19 @@ body{
   transition:.3s;
 }
 
-/* HEADER */
-header{
-  text-align:center;
-  padding:80px 20px 20px;
-}
-
-header h1{
-  margin:0;
-}
-
-/* TOGGLE SWITCH */
+/* TOGGLE */
 .themeSwitch{
   position:fixed;
   top:20px;
   left:20px;
-  width:60px;
-  height:30px;
+  width:65px;
+  height:32px;
   background:var(--card);
-  border-radius:20px;
+  border-radius:50px;
+  padding:4px;
   cursor:pointer;
   display:flex;
   align-items:center;
-  padding:3px;
-  transition:.3s;
 }
 
 .switchCircle{
@@ -67,7 +56,7 @@ header h1{
 }
 
 body.light .switchCircle{
-  transform:translateX(30px);
+  transform:translateX(33px);
 }
 
 /* PROMO BUTTON */
@@ -77,45 +66,45 @@ body.light .switchCircle{
   right:20px;
   background:var(--primary);
   color:white;
-  padding:8px 15px;
+  padding:8px 16px;
   border-radius:20px;
   cursor:pointer;
 }
 
-/* NAV BUTTONS */
-.navButtons{
+/* HEADER */
+header{
+  text-align:center;
+  padding:90px 20px 20px;
+}
+
+/* NAV */
+.mainButtons{
   text-align:center;
   margin-top:20px;
 }
 
-.navButtons a{
+.mainButtons a{
   display:inline-block;
   margin:10px;
-  padding:10px 20px;
+  padding:12px 25px;
   background:var(--primary);
   color:white;
-  border-radius:8px;
+  border-radius:10px;
   text-decoration:none;
+  font-weight:600;
 }
 
-/* INFO BOX */
-.infoSection{
-  max-width:700px;
+/* CONTACT FORM */
+.contactForm{
+  max-width:600px;
   margin:40px auto;
-  padding:0 20px;
-}
-
-.infoBox{
-  background:var(--card);
   padding:20px;
-  margin-bottom:15px;
+  background:var(--card);
   border-radius:12px;
   position:relative;
-  cursor:pointer;
-  transition:.3s;
 }
 
-.infoBox:before{
+.contactForm:before{
   content:"";
   position:absolute;
   left:0;
@@ -126,34 +115,62 @@ body.light .switchCircle{
   border-radius:12px 0 0 12px;
 }
 
-.infoHeader{
-  display:flex;
-  justify-content:space-between;
+.contactForm h3{
+  margin-top:0;
+}
+
+.contactForm input,
+.contactForm textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:6px;
+  border:1px solid #333;
+  background:transparent;
+  color:var(--text);
+}
+
+.contactForm button{
+  background:var(--primary);
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  width:100%;
+}
+
+.loadingText{
+  text-align:center;
+  margin-top:10px;
+  display:none;
+}
+
+/* PROMO POPUP */
+#promoOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
   align-items:center;
 }
 
-.arrow{
-  transition:.3s;
+#promoBox{
+  background:var(--card);
+  width:350px;
+  border-radius:12px;
+  padding:20px;
+  position:relative;
 }
 
-.infoContent{
-  max-height:0;
-  overflow:hidden;
-  transition:.3s;
-  font-size:14px;
-  margin-top:10px;
-  opacity:.8;
+#promoClose{
+  position:absolute;
+  top:10px;
+  left:10px;
+  cursor:pointer;
 }
 
-.infoBox.active .infoContent{
-  max-height:200px;
-}
-
-.infoBox.active .arrow{
-  transform:rotate(90deg);
-}
-
-/* FOOTER */
 footer{
   text-align:center;
   padding:30px;
@@ -168,54 +185,35 @@ footer{
   <div class="switchCircle" id="switchIcon">🌙</div>
 </div>
 
-<div id="promoButton">🎁 Promo</div>
+<div id="promoButton" onclick="openPromo()">🎁 Promo</div>
 
 <header>
   <h1>Hunter Soft Bot</h1>
   <p>Layanan Bot WhatsApp & Telegram</p>
 </header>
 
-<div class="navButtons">
-  <a href="/store">Store</a>
-  <a href="/tools">Tools</a>
+<div class="mainButtons">
+  <a href="/store">🛒 Store</a>
+  <a href="/tools">🛠 Tools</a>
 </div>
 
-<!-- INFO SECTION -->
-<div class="infoSection">
+<!-- CONTACT FORM -->
+<div class="contactForm">
+  <h3>SEND MESSAGE</h3>
+  <input type="text" id="name" placeholder="USERNAME">
+  <input type="text" id="phone" placeholder="WA NUMBER">
+  <textarea id="message" rows="4" placeholder="MESSAGE"></textarea>
+  <button onclick="sendMessage()">Send Message</button>
+  <div class="loadingText" id="loadingText">Mengirim pesan...</div>
+</div>
 
-  <div class="infoBox" onclick="toggleInfo(this)">
-    <div class="infoHeader">
-      <strong>Tentang Hunter Soft Bot</strong>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="infoContent">
-      Hunter Soft Bot adalah layanan bot otomatis untuk WhatsApp & Telegram 
-      dengan fitur downloader, auto order, reseller, dan banyak lagi.
-    </div>
+<!-- PROMO POPUP -->
+<div id="promoOverlay">
+  <div id="promoBox">
+    <div id="promoClose" onclick="closePromo()">✖</div>
+    <h3>Promo Aktif</h3>
+    <p>Diskon 10% Paket Premium</p>
   </div>
-
-  <div class="infoBox" onclick="toggleInfo(this)">
-    <div class="infoHeader">
-      <strong>Kenapa Pilih Kami?</strong>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="infoContent">
-      Kami menyediakan bot stabil, fast response, support aktif,
-      dan sistem yang terus diperbarui secara berkala.
-    </div>
-  </div>
-
-  <div class="infoBox" onclick="toggleInfo(this)">
-    <div class="infoHeader">
-      <strong>Fitur Unggulan</strong>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="infoContent">
-      Downloader TikTok, Auto Order, Anti Delay, Custom Menu,
-      Sistem Store, Voucher, dan Tools premium lainnya.
-    </div>
-  </div>
-
 </div>
 
 <footer>
@@ -223,10 +221,8 @@ Hunter Soft Bot © 2026
 </footer>
 
 <script>
-// THEME
 function toggleTheme(){
   document.body.classList.toggle("light");
-
   const icon=document.getElementById("switchIcon");
 
   if(document.body.classList.contains("light")){
@@ -238,21 +234,46 @@ function toggleTheme(){
   }
 }
 
-// LOAD THEME
 if(localStorage.getItem("theme")==="light"){
   document.body.classList.add("light");
   document.getElementById("switchIcon").innerHTML="☀️";
 }
 
-// INFO TOGGLE
-function toggleInfo(element){
-  document.querySelectorAll(".infoBox").forEach(box=>{
-    if(box!==element){
-      box.classList.remove("active");
-    }
+function openPromo(){
+  document.getElementById("promoOverlay").style.display="flex";
+}
+
+function closePromo(){
+  document.getElementById("promoOverlay").style.display="none";
+}
+
+async function sendMessage(){
+  const name=document.getElementById("name").value;
+  const phone=document.getElementById("phone").value;
+  const message=document.getElementById("message").value;
+  const loading=document.getElementById("loadingText");
+
+  if(!name || !phone || !message){
+    alert("Isi semua field dulu!");
+    return;
+  }
+
+  loading.style.display="block";
+
+  const res=await fetch("/api/send",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({name,phone,message})
   });
 
-  element.classList.toggle("active");
+  const data=await res.json();
+  loading.style.display="none";
+
+  if(data.success){
+    alert("Pesan berhasil dikirim!");
+  }else{
+    alert("Gagal mengirim pesan!");
+  }
 }
 </script>
 
