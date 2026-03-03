@@ -3,267 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Store - Hunter Soft Bot</title>
+<title>Hunter Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --primary: #4DA6FF;
-  --bg: #0f0f0f;
-  --card: #1c1c1c;
-  --text: #ffffff;
+:root{
+  --primary:#4DA6FF;
+  --bg:#0f0f0f;
+  --card:#1c1c1c;
+  --text:#ffffff;
 }
 
-body.light {
-  --bg: #f5f7fa;
-  --card: #ffffff;
-  --text: #111111;
+body.light{
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#111111;
 }
 
-body {
-  margin: 0;
-  font-family: Poppins;
-  background: var(--bg);
-  color: var(--text);
-  transition: 0.3s;
+body{
+  margin:0;
+  font-family:Poppins;
+  background:var(--bg);
+  color:var(--text);
+  transition:0.3s;
 }
 
-/* CART ICON */
-#cartIcon {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: var(--primary);
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  color: white;
-  font-size: 18px;
+/* HEADER BUTTONS */
+#backBtn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:var(--primary);
+  color:white;
+  padding:8px 14px;
+  border-radius:20px;
+  text-decoration:none;
 }
 
-header {
-  text-align: center;
-  padding: 60px 20px 20px;
+#cartIcon{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:var(--primary);
+  color:white;
+  padding:10px;
+  border-radius:50%;
+  cursor:pointer;
 }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  padding: 20px;
-  max-width: 1100px;
-  margin: auto;
+#cartCount{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  background:red;
+  color:white;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:50%;
 }
 
-.product {
-  background: var(--card);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
+header{
+  text-align:center;
+  padding:70px 20px 10px;
 }
 
-.price {
-  font-size: 18px;
-  margin: 10px 0;
+header h1{
+  margin:0;
 }
 
-.oldPrice {
-  text-decoration: line-through;
-  opacity: 0.6;
-  margin-right: 5px;
+header p{
+  margin:5px 0 20px;
+  opacity:0.7;
 }
 
-.newPrice {
-  color: green;
-  font-weight: bold;
+/* PRODUCTS GRID */
+.products{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  padding:20px;
+  max-width:900px;
+  margin:auto;
 }
 
-button {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
+.product{
+  background:var(--card);
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:220px;
+}
+
+.product h3{
+  margin:0;
+}
+
+.price{
+  margin:10px 0;
+  font-weight:600;
+}
+
+.qtyControl{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.qtyControl button{
+  width:30px;
+  height:30px;
+  border:none;
+  border-radius:6px;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+}
+
+.addBtn{
+  background:var(--primary);
+  border:none;
+  padding:8px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
 }
 
 /* CART POPUP */
-#cartOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
+#cartOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
 }
 
-#cartBox {
-  background: var(--card);
-  width: 350px;
-  max-height: 450px;
-  border-radius: 12px;
-  padding: 20px;
-  overflow-y: auto;
+#cartBox{
+  background:var(--card);
+  width:380px;
+  max-height:450px;
+  border-radius:12px;
+  padding:20px;
+  overflow-y:auto;
 }
 
-.cartItem {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.cartItem{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+  font-size:14px;
 }
 
-#voucherInput {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
+.total{
+  font-weight:bold;
+  margin-top:10px;
 }
 
-footer {
-  text-align: center;
-  padding: 30px;
-  opacity: 0.6;
+.checkoutBtn{
+  background:var(--primary);
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+footer{
+  text-align:center;
+  padding:30px;
+  opacity:0.6;
 }
 </style>
 </head>
 
 <body>
 
-<div id="cartIcon">🛒</div>
+<a href="/" id="backBtn">← Kembali</a>
+
+<div id="cartIcon">
+  🛒
+  <div id="cartCount">0</div>
+</div>
 
 <header>
-<h1>Hunter Soft Bot Store</h1>
+  <h1>Hunter Store</h1>
+  <p>Pilih Paket Bot Sesuai Kebutuhanmu</p>
 </header>
 
 <div class="products" id="productList"></div>
 
-<!-- CART POPUP -->
+<!-- CART -->
 <div id="cartOverlay">
   <div id="cartBox">
     <h3>Keranjang</h3>
     <div id="cartItems"></div>
-
-    <input type="text" id="voucherInput" placeholder="Masukkan Kode Voucher">
-    <button onclick="applyVoucher()">Gunakan Promo</button>
-
-    <h3 id="totalPrice"></h3>
-    <button onclick="checkout()">Checkout via WhatsApp</button>
+    <div class="total" id="totalPrice"></div>
+    <button class="checkoutBtn" onclick="checkout()">Checkout via WhatsApp</button>
   </div>
 </div>
 
 <footer>
-<a href="/">← Kembali ke Home</a>
+Hunter Soft Bot © 2026
 </footer>
 
 <script>
 // DARK MODE SYNC
-if (localStorage.getItem("theme") === "light") {
+if(localStorage.getItem("theme")==="light"){
   document.body.classList.add("light");
 }
 
 // PRODUCTS
-const products = [
-  {name:"Paket Basic", price:30000},
-  {name:"Paket Premium", price:50000},
-  {name:"Paket Custom", price:80000},
-  {name:"Bot Reseller", price:100000},
-  {name:"Bot Downloader", price:45000},
-  {name:"Bot Auto Order", price:70000}
+const products=[
+{name:"Paket Basic",price:30000},
+{name:"Paket Premium",price:50000},
+{name:"Paket Custom",price:80000},
+{name:"Bot Downloader",price:45000},
+{name:"Bot Reseller",price:100000},
+{name:"Bot Auto Order",price:70000}
 ];
 
-const vouchers = {
-  "PROMO10": 0.10,
-  "DISKON20": 0.20
-};
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let discount = parseFloat(localStorage.getItem("discount")) || 0;
-
-// SAVE FUNCTION
+// SAVE
 function saveCart(){
-  localStorage.setItem("cart", JSON.stringify(cart));
-  localStorage.setItem("discount", discount);
+  localStorage.setItem("cart",JSON.stringify(cart));
+  updateCartCount();
 }
 
-// RENDER PRODUCTS
-const productList = document.getElementById("productList");
+// UPDATE BADGE
+function updateCartCount(){
+  let totalQty=cart.reduce((sum,item)=>sum+item.qty,0);
+  document.getElementById("cartCount").innerText=totalQty;
+}
+updateCartCount();
 
-products.forEach((p, index) => {
-  productList.innerHTML += `
+// RENDER PRODUCTS
+const productList=document.getElementById("productList");
+
+products.forEach((p,index)=>{
+  productList.innerHTML+=`
   <div class="product">
-    <h3>${p.name}</h3>
-    <div class="price">Rp ${p.price.toLocaleString()}</div>
-    <button onclick="addToCart(${index})">Masukkan Keranjang</button>
+    <div>
+      <h3>${p.name}</h3>
+      <div class="price">Rp ${p.price.toLocaleString()}</div>
+    </div>
+
+    <div>
+      <div class="qtyControl">
+        <button onclick="decrease(${index})">-</button>
+        <span id="qty-${index}">1</span>
+        <button onclick="increase(${index})">+</button>
+      </div>
+      <button class="addBtn" onclick="addToCart(${index})">
+        Masukkan Keranjang
+      </button>
+    </div>
   </div>
   `;
 });
 
+let quantities={};
+products.forEach((_,i)=>quantities[i]=1);
+
+function increase(i){
+  quantities[i]++;
+  document.getElementById(`qty-${i}`).innerText=quantities[i];
+}
+
+function decrease(i){
+  if(quantities[i]>1){
+    quantities[i]--;
+    document.getElementById(`qty-${i}`).innerText=quantities[i];
+  }
+}
+
 function addToCart(index){
-  cart.push(products[index]);
+  const existing=cart.find(item=>item.name===products[index].name);
+  if(existing){
+    existing.qty+=quantities[index];
+  }else{
+    cart.push({
+      name:products[index].name,
+      price:products[index].price,
+      qty:quantities[index]
+    });
+  }
   saveCart();
-  alert("Produk masuk keranjang");
+  alert("Produk ditambahkan!");
 }
 
 // CART POPUP
-const cartOverlay = document.getElementById("cartOverlay");
-document.getElementById("cartIcon").onclick = () => {
+const cartOverlay=document.getElementById("cartOverlay");
+document.getElementById("cartIcon").onclick=()=>{
   renderCart();
   cartOverlay.style.display="flex";
 };
 
-cartOverlay.onclick = (e) => {
+cartOverlay.onclick=(e)=>{
   if(e.target===cartOverlay){
     cartOverlay.style.display="none";
   }
 };
 
 function renderCart(){
-  const cartItems = document.getElementById("cartItems");
+  const cartItems=document.getElementById("cartItems");
   cartItems.innerHTML="";
   let total=0;
 
-  cart.forEach((item, i)=>{
-    total+=item.price;
+  cart.forEach(item=>{
+    let sub=item.price*item.qty;
+    total+=sub;
     cartItems.innerHTML+=`
       <div class="cartItem">
-        <span>${item.name}</span>
-        <span>Rp ${item.price.toLocaleString()}</span>
+        <span>${item.name} x${item.qty}</span>
+        <span>Rp ${sub.toLocaleString()}</span>
       </div>
     `;
   });
 
-  if(discount>0){
-    let discounted = total - (total*discount);
-    document.getElementById("totalPrice").innerHTML =
-      `<span class="oldPrice">Rp ${total.toLocaleString()}</span>
-       <span class="newPrice">Rp ${discounted.toLocaleString()}</span>`;
-  } else {
-    document.getElementById("totalPrice").innerText =
-      "Total: Rp "+total.toLocaleString();
-  }
-}
-
-function applyVoucher(){
-  const code = document.getElementById("voucherInput").value.toUpperCase();
-  if(vouchers[code]){
-    discount = vouchers[code];
-    saveCart();
-    alert("Voucher berhasil digunakan!");
-    renderCart();
-  } else {
-    alert("Voucher tidak valid!");
-  }
+  document.getElementById("totalPrice").innerText=
+    "Total: Rp "+total.toLocaleString();
 }
 
 function checkout(){
   let message="Saya ingin order:%0A";
-  cart.forEach(item=>{
-    message+=`- ${item.name}%0A`;
-  });
+  let total=0;
 
-  let total=cart.reduce((sum,item)=>sum+item.price,0);
-  if(discount>0){
-    total = total-(total*discount);
-  }
+  cart.forEach(item=>{
+    let sub=item.price*item.qty;
+    total+=sub;
+    message+=`- ${item.name} x${item.qty} (Rp ${sub})%0A`;
+  });
 
   message+=`Total: Rp ${total}`;
   window.open(`https://wa.me/6283115384200?text=${message}`);
