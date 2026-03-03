@@ -25,10 +25,10 @@ body{
   font-family:Poppins;
   background:var(--bg);
   color:var(--text);
-  transition:0.3s;
+  transition:.3s;
 }
 
-/* HEADER BUTTONS */
+/* BUTTONS */
 #backBtn{
   position:fixed;
   top:20px;
@@ -62,21 +62,13 @@ body{
   border-radius:50%;
 }
 
+/* HEADER */
 header{
   text-align:center;
   padding:70px 20px 10px;
 }
 
-header h1{
-  margin:0;
-}
-
-header p{
-  margin:5px 0 20px;
-  opacity:0.7;
-}
-
-/* PRODUCTS GRID */
+/* PRODUCTS */
 .products{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -94,11 +86,6 @@ header p{
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  min-height:220px;
-}
-
-.product h3{
-  margin:0;
 }
 
 .price{
@@ -109,7 +96,6 @@ header p{
 .qtyControl{
   display:flex;
   justify-content:center;
-  align-items:center;
   gap:10px;
   margin-bottom:10px;
 }
@@ -133,11 +119,11 @@ header p{
   cursor:pointer;
 }
 
-/* CART POPUP */
+/* CART */
 #cartOverlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,.6);
   display:none;
   justify-content:center;
   align-items:center;
@@ -146,7 +132,7 @@ header p{
 #cartBox{
   background:var(--card);
   width:380px;
-  max-height:450px;
+  max-height:520px;
   border-radius:12px;
   padding:20px;
   overflow-y:auto;
@@ -159,9 +145,31 @@ header p{
   font-size:14px;
 }
 
+.removeBtn{
+  color:red;
+  cursor:pointer;
+}
+
 .total{
   font-weight:bold;
   margin-top:10px;
+}
+
+.oldPrice{
+  text-decoration:line-through;
+  opacity:.6;
+  margin-right:5px;
+}
+
+.newPrice{
+  color:green;
+  font-weight:bold;
+}
+
+.voucherInfo{
+  font-size:13px;
+  margin-top:5px;
+  color:lime;
 }
 
 .checkoutBtn{
@@ -175,10 +183,21 @@ header p{
   margin-top:10px;
 }
 
+.clearBtn{
+  background:red;
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+
 footer{
   text-align:center;
   padding:30px;
-  opacity:0.6;
+  opacity:.6;
 }
 </style>
 </head>
@@ -193,8 +212,8 @@ footer{
 </div>
 
 <header>
-  <h1>Hunter Store</h1>
-  <p>Pilih Paket Bot Sesuai Kebutuhanmu</p>
+<h1>Hunter Store</h1>
+<p>Pilih Paket Bot Sesuai Kebutuhanmu</p>
 </header>
 
 <div class="products" id="productList"></div>
@@ -204,8 +223,16 @@ footer{
   <div id="cartBox">
     <h3>Keranjang</h3>
     <div id="cartItems"></div>
+
+    <input type="text" id="voucherInput" placeholder="Masukkan Kode Voucher">
+    <button onclick="applyVoucher()">Gunakan Promo</button>
+
+    <div class="voucherInfo" id="voucherInfo"></div>
+
     <div class="total" id="totalPrice"></div>
+
     <button class="checkoutBtn" onclick="checkout()">Checkout via WhatsApp</button>
+    <button class="clearBtn" onclick="clearCart()">Hapus Semua</button>
   </div>
 </div>
 
@@ -214,7 +241,7 @@ Hunter Soft Bot © 2026
 </footer>
 
 <script>
-// DARK MODE SYNC
+// DARK MODE
 if(localStorage.getItem("theme")==="light"){
   document.body.classList.add("light");
 }
@@ -229,15 +256,31 @@ const products=[
 {name:"Bot Auto Order",price:70000}
 ];
 
+// VOUCHERS (Manual Edit Here)
+const vouchers={
+  "PROMO10":{
+    discount:0.10,
+    expires:"2026-12-31"
+  },
+  "DISKON20":{
+    discount:0.20,
+    expires:"2026-06-30"
+  }
+};
+
 let cart=JSON.parse(localStorage.getItem("cart"))||[];
+let discount=parseFloat(localStorage.getItem("discount"))||0;
+let activeVoucher=localStorage.getItem("activeVoucher")||null;
 
 // SAVE
 function saveCart(){
   localStorage.setItem("cart",JSON.stringify(cart));
+  localStorage.setItem("discount",discount);
+  localStorage.setItem("activeVoucher",activeVoucher);
   updateCartCount();
 }
 
-// UPDATE BADGE
+// BADGE
 function updateCartCount(){
   let totalQty=cart.reduce((sum,item)=>sum+item.qty,0);
   document.getElementById("cartCount").innerText=totalQty;
@@ -246,31 +289,27 @@ updateCartCount();
 
 // RENDER PRODUCTS
 const productList=document.getElementById("productList");
+let quantities={};
 
 products.forEach((p,index)=>{
+  quantities[index]=1;
   productList.innerHTML+=`
   <div class="product">
-    <div>
-      <h3>${p.name}</h3>
-      <div class="price">Rp ${p.price.toLocaleString()}</div>
+    <h3>${p.name}</h3>
+    <div class="price">Rp ${p.price.toLocaleString()}</div>
+
+    <div class="qtyControl">
+      <button onclick="decrease(${index})">-</button>
+      <span id="qty-${index}">1</span>
+      <button onclick="increase(${index})">+</button>
     </div>
 
-    <div>
-      <div class="qtyControl">
-        <button onclick="decrease(${index})">-</button>
-        <span id="qty-${index}">1</span>
-        <button onclick="increase(${index})">+</button>
-      </div>
-      <button class="addBtn" onclick="addToCart(${index})">
-        Masukkan Keranjang
-      </button>
-    </div>
+    <button class="addBtn" onclick="addToCart(${index})">
+      Masukkan Keranjang
+    </button>
   </div>
   `;
 });
-
-let quantities={};
-products.forEach((_,i)=>quantities[i]=1);
 
 function increase(i){
   quantities[i]++;
@@ -286,6 +325,7 @@ function decrease(i){
 
 function addToCart(index){
   const existing=cart.find(item=>item.name===products[index].name);
+
   if(existing){
     existing.qty+=quantities[index];
   }else{
@@ -295,11 +335,12 @@ function addToCart(index){
       qty:quantities[index]
     });
   }
+
   saveCart();
   alert("Produk ditambahkan!");
 }
 
-// CART POPUP
+// CART
 const cartOverlay=document.getElementById("cartOverlay");
 document.getElementById("cartIcon").onclick=()=>{
   renderCart();
@@ -320,16 +361,63 @@ function renderCart(){
   cart.forEach(item=>{
     let sub=item.price*item.qty;
     total+=sub;
+
     cartItems.innerHTML+=`
       <div class="cartItem">
-        <span>${item.name} x${item.qty}</span>
-        <span>Rp ${sub.toLocaleString()}</span>
+        <div>${item.name} × ${item.qty} : Rp ${sub.toLocaleString()}</div>
       </div>
     `;
   });
 
-  document.getElementById("totalPrice").innerText=
-    "Total: Rp "+total.toLocaleString();
+  let finalTotal=total;
+
+  if(discount>0){
+    finalTotal=total-(total*discount);
+    document.getElementById("totalPrice").innerHTML=
+      `<span class="oldPrice">Rp ${total.toLocaleString()}</span>
+       <span class="newPrice">Rp ${finalTotal.toLocaleString()}</span>`;
+  }else{
+    document.getElementById("totalPrice").innerText=
+      "Total: Rp "+total.toLocaleString();
+  }
+
+  if(activeVoucher){
+    document.getElementById("voucherInfo").innerText=
+      `Voucher ${activeVoucher} aktif (${discount*100}% diskon)`;
+  }else{
+    document.getElementById("voucherInfo").innerText="";
+  }
+}
+
+function applyVoucher(){
+  let code=document.getElementById("voucherInput").value.toUpperCase();
+
+  if(vouchers[code]){
+    let today=new Date();
+    let expireDate=new Date(vouchers[code].expires);
+
+    if(today<=expireDate){
+      discount=vouchers[code].discount;
+      activeVoucher=code;
+      saveCart();
+      alert("Voucher aktif! Diskon "+(discount*100)+"%");
+      renderCart();
+    }else{
+      alert("Voucher sudah expired!");
+    }
+  }else{
+    alert("Voucher tidak valid!");
+  }
+}
+
+function clearCart(){
+  if(confirm("Hapus semua produk?")){
+    cart=[];
+    discount=0;
+    activeVoucher=null;
+    saveCart();
+    renderCart();
+  }
 }
 
 function checkout(){
@@ -342,7 +430,13 @@ function checkout(){
     message+=`- ${item.name} x${item.qty} (Rp ${sub})%0A`;
   });
 
-  message+=`Total: Rp ${total}`;
+  if(discount>0){
+    let newTotal=total-(total*discount);
+    message+=`Total setelah diskon: Rp ${newTotal}`;
+  }else{
+    message+=`Total: Rp ${total}`;
+  }
+
   window.open(`https://wa.me/6283115384200?text=${message}`);
 }
 </script>
