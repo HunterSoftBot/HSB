@@ -7,274 +7,341 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --primary:#4DA6FF;
-  --bg:#0f0f0f;
-  --card:#1c1c1c;
-  --text:#ffffff;
+:root {
+  --primary: #4DA6FF;
+  --bg: #0f0f0f;
+  --card: #1c1c1c;
+  --text: #ffffff;
 }
 
-body.light{
-  --bg:#f5f7fa;
-  --card:#ffffff;
-  --text:#111111;
+body.light {
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #111111;
 }
 
-body{
-  margin:0;
-  font-family:Poppins;
-  background:var(--bg);
-  color:var(--text);
-  transition:.3s;
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
 }
 
-/* TOGGLE */
-.themeSwitch{
-  position:fixed;
-  top:20px;
-  left:20px;
-  width:65px;
-  height:32px;
-  background:var(--card);
-  border-radius:50px;
-  padding:4px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
+/* THEME SWITCH (KANAN) */
+#themeToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 60px;
+  height: 30px;
+  background: var(--card);
+  border-radius: 20px;
+  padding: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  z-index: 999;
 }
 
-.switchCircle{
-  width:24px;
-  height:24px;
-  background:var(--primary);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  transition:.3s;
+#themeToggle .circle {
+  width: 24px;
+  height: 24px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: 0.3s;
 }
 
-body.light .switchCircle{
-  transform:translateX(33px);
+body.light #themeToggle .circle {
+  transform: translateX(30px);
 }
 
-/* PROMO BUTTON */
-#promoButton{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:var(--primary);
-  color:white;
-  padding:8px 16px;
-  border-radius:20px;
-  cursor:pointer;
+/* PROMO BUTTON (KIRI) */
+#promoButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: var(--primary);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 999;
 }
 
 /* HEADER */
-header{
-  text-align:center;
-  padding:90px 20px 20px;
+header {
+  text-align: center;
+  padding: 60px 20px 30px;
 }
 
-/* NAV */
-.mainButtons{
-  text-align:center;
-  margin-top:20px;
+.card {
+  background: var(--card);
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 500px;
+  position: relative;
 }
 
-.mainButtons a{
-  display:inline-block;
-  margin:10px;
-  padding:12px 25px;
-  background:var(--primary);
-  color:white;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:600;
+.card:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  background: var(--primary);
+  border-radius: 12px 0 0 12px;
 }
 
-/* CONTACT FORM */
-.contactForm{
-  max-width:600px;
-  margin:40px auto;
-  padding:20px;
-  background:var(--card);
-  border-radius:12px;
-  position:relative;
+.btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.contactForm:before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  width:6px;
-  height:100%;
-  background:var(--primary);
-  border-radius:12px 0 0 12px;
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: var(--text);
 }
 
-.contactForm h3{
-  margin-top:0;
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.contactForm input,
-.contactForm textarea{
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-  border-radius:6px;
-  border:1px solid #333;
-  background:transparent;
-  color:var(--text);
+#status {
+  margin-top: 10px;
+  font-size: 14px;
 }
 
-.contactForm button{
-  background:var(--primary);
-  border:none;
-  padding:10px;
-  border-radius:8px;
-  color:white;
-  cursor:pointer;
-  width:100%;
+/* PROMO OVERLAY */
+#promoOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.loadingText{
-  text-align:center;
-  margin-top:10px;
-  display:none;
+#promoBox {
+  background: var(--card);
+  width: 350px;
+  max-height: 420px;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-/* PROMO POPUP */
-#promoOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
+#promoClose {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
 }
 
-#promoBox{
-  background:var(--card);
-  width:350px;
-  border-radius:12px;
-  padding:20px;
-  position:relative;
+#promoList {
+  margin-top: 30px;
+  overflow-y: auto;
+  max-height: 300px;
 }
 
-#promoClose{
-  position:absolute;
-  top:10px;
-  left:10px;
-  cursor:pointer;
+.promoItem {
+  background: var(--bg);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-footer{
-  text-align:center;
-  padding:30px;
-  opacity:.6;
+.promoItem a {
+  background: var(--primary);
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.6;
+  font-size: 13px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="themeSwitch" onclick="toggleTheme()">
-  <div class="switchCircle" id="switchIcon">🌙</div>
-</div>
+<div id="promoButton">🎁 Promo</div>
 
-<div id="promoButton" onclick="openPromo()">🎁 Promo</div>
+<div id="themeToggle">
+  <div class="circle" id="themeIcon">🌙</div>
+</div>
 
 <header>
   <h1>Hunter Soft Bot</h1>
   <p>Layanan Bot WhatsApp & Telegram</p>
 </header>
 
-<div class="mainButtons">
-  <a href="/store">🛒 Store</a>
-  <a href="/tools">🛠 Tools</a>
+<div class="card">
+  <h2>Store</h2>
+  <a href="/store" class="btn">Lihat Paket</a>
 </div>
 
-<!-- CONTACT FORM -->
-<div class="contactForm">
-  <h3>SEND MESSAGE</h3>
-  <input type="text" id="name" placeholder="USERNAME">
-  <input type="text" id="phone" placeholder="WA NUMBER">
-  <textarea id="message" rows="4" placeholder="MESSAGE"></textarea>
-  <button onclick="sendMessage()">Send Message</button>
-  <div class="loadingText" id="loadingText">Mengirim pesan...</div>
+<div class="card">
+  <h2>Tools</h2>
+  <a href="/tools" class="btn">Gunakan Tools</a>
 </div>
+
+<div class="card">
+  <h2>Contact Owner</h2>
+  <input type="text" id="name" placeholder="Username">
+  <input type="text" id="phone" placeholder="WA Number">
+  <textarea id="message" rows="4" placeholder="Message"></textarea>
+  <button id="send">Send Message</button>
+  <p id="status"></p>
+</div>
+
+<footer>
+Powered by Vercel • GitHub Ready
+</footer>
 
 <!-- PROMO POPUP -->
 <div id="promoOverlay">
   <div id="promoBox">
-    <div id="promoClose" onclick="closePromo()">✖</div>
-    <h3>Promo Aktif</h3>
-    <p>Diskon 10% Paket Premium</p>
+    <div id="promoClose">✖</div>
+    <h2>🔥 Promo Hunter Soft Bot</h2>
+
+    <div id="promoList">
+      <div class="promoItem">
+        <p>🎉 Diskon 20% Paket Premium</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>🚀 Free Setup Bot</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>🔥 Bonus Custom Menu</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>💎 Hosting Gratis 1 Minggu</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>🎁 Paket Bundle Hemat</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>⚡ Diskon Khusus Member</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+    </div>
   </div>
 </div>
 
-<footer>
-Hunter Soft Bot © 2026
-</footer>
-
 <script>
-function toggleTheme(){
-  document.body.classList.toggle("light");
-  const icon=document.getElementById("switchIcon");
+// THEME SWITCH
+const toggle = document.getElementById("themeToggle");
+const icon = document.getElementById("themeIcon");
 
-  if(document.body.classList.contains("light")){
-    icon.innerHTML="☀️";
-    localStorage.setItem("theme","light");
-  }else{
-    icon.innerHTML="🌙";
-    localStorage.setItem("theme","dark");
-  }
-}
-
-if(localStorage.getItem("theme")==="light"){
+if (localStorage.getItem("theme") === "light") {
   document.body.classList.add("light");
-  document.getElementById("switchIcon").innerHTML="☀️";
+  icon.innerText = "☀️";
 }
 
-function openPromo(){
-  document.getElementById("promoOverlay").style.display="flex";
-}
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("light");
 
-function closePromo(){
-  document.getElementById("promoOverlay").style.display="none";
-}
+  if (document.body.classList.contains("light")) {
+    localStorage.setItem("theme", "light");
+    icon.innerText = "☀️";
+  } else {
+    localStorage.setItem("theme", "dark");
+    icon.innerText = "🌙";
+  }
+});
 
-async function sendMessage(){
-  const name=document.getElementById("name").value;
-  const phone=document.getElementById("phone").value;
-  const message=document.getElementById("message").value;
-  const loading=document.getElementById("loadingText");
+// PROMO
+const promoBtn = document.getElementById("promoButton");
+const promoOverlay = document.getElementById("promoOverlay");
+const promoClose = document.getElementById("promoClose");
 
-  if(!name || !phone || !message){
-    alert("Isi semua field dulu!");
+promoBtn.addEventListener("click", () => {
+  promoOverlay.style.display = "flex";
+});
+
+promoClose.addEventListener("click", () => {
+  promoOverlay.style.display = "none";
+});
+
+promoOverlay.addEventListener("click", (e) => {
+  if (e.target === promoOverlay) {
+    promoOverlay.style.display = "none";
+  }
+});
+
+// SEND MESSAGE
+document.getElementById("send").addEventListener("click", async () => {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const message = document.getElementById("message").value.trim();
+  const status = document.getElementById("status");
+
+  if (!name || !phone || !message) {
+    status.innerText = "Isi semua field ❌";
     return;
   }
 
-  loading.style.display="block";
+  status.innerText = "Mengirim...";
 
-  const res=await fetch("/api/send",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({name,phone,message})
+  const res = await fetch("/api/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, phone, message })
   });
 
-  const data=await res.json();
-  loading.style.display="none";
+  const data = await res.json();
 
-  if(data.success){
-    alert("Pesan berhasil dikirim!");
-  }else{
-    alert("Gagal mengirim pesan!");
+  if (data.success) {
+    status.innerText = "Pesan terkirim 🎉";
+  } else {
+    status.innerText = "Gagal kirim ❌";
   }
-}
+});
 </script>
 
 </body>
