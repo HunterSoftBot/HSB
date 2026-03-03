@@ -5,74 +5,212 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hunter Soft Bot</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+
 <style>
-body{margin:0;font-family:Poppins;background:#0f0f0f;color:white}
-header{text-align:center;padding:40px}
-.card{background:#1c1c1c;margin:20px auto;padding:25px;border-radius:12px;max-width:500px;position:relative}
-.card:before{content:'';position:absolute;left:0;top:0;height:100%;width:6px;background:#C5FF83;border-radius:12px 0 0 12px}
-.btn{display:block;text-align:center;padding:12px;margin-top:10px;border-radius:8px;background:#C5FF83;color:black;text-decoration:none;font-weight:600}
-.btn:hover{background:white}
-input,textarea{width:100%;padding:10px;margin:8px 0;background:#222;border:1px solid #333;border-radius:6px;color:white}
-button{width:100%;padding:12px;border:none;border-radius:8px;background:#C5FF83;font-weight:bold;cursor:pointer}
-footer{text-align:center;padding:20px;opacity:.6}
+:root {
+  --primary: #4DA6FF;
+  --bg: #0f0f0f;
+  --card: #1c1c1c;
+  --text: #ffffff;
+}
+
+body.light {
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #111111;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+#themeToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 999;
+  transition: 0.3s;
+}
+
+header {
+  text-align: center;
+  padding: 50px 20px 30px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.card {
+  background: var(--card);
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 500px;
+  position: relative;
+  transition: 0.3s;
+}
+
+.card:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  background: var(--primary);
+  border-radius: 12px 0 0 12px;
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: var(--text);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#status {
+  margin-top: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.6;
+  font-size: 13px;
+}
 </style>
 </head>
+
 <body>
 
+<div id="themeToggle">🌙 Dark</div>
+
 <header>
-<h1>Hunter Soft Bot</h1>
-<p>Layanan Bot WhatsApp & Telegram</p>
+  <h1>Hunter Soft Bot</h1>
+  <p>Layanan Bot WhatsApp & Telegram</p>
 </header>
 
 <div class="card">
-<h2>Order Bot</h2>
-<a href="store.html" class="btn">Lihat Paket</a>
+  <h2>Store</h2>
+  <a href="/store" class="btn">Lihat Paket</a>
 </div>
 
 <div class="card">
-<h2>Tools</h2>
-<a href="tools.html" class="btn">Gunakan Tools</a>
+  <h2>Tools</h2>
+  <a href="/tools" class="btn">Gunakan Tools</a>
 </div>
 
 <div class="card">
-<h2>Contact Owner</h2>
-<input type="text" id="name" placeholder="Username">
-<input type="text" id="phone" placeholder="WA Number">
-<textarea id="message" rows="4" placeholder="Message"></textarea>
-<button id="send">Send Message</button>
-<p id="status"></p>
+  <h2>Contact Owner</h2>
+  <input type="text" id="name" placeholder="Username">
+  <input type="text" id="phone" placeholder="WA Number">
+  <textarea id="message" rows="4" placeholder="Message"></textarea>
+  <button id="send">Send Message</button>
+  <p id="status"></p>
 </div>
 
-<footer>Powered by Vercel • GitHub Ready</footer>
+<footer>
+Powered by Vercel • GitHub Ready
+</footer>
 
 <script>
-document.getElementById("send").addEventListener("click", async ()=>{
-const name=document.getElementById("name").value.trim();
-const phone=document.getElementById("phone").value.trim();
-const message=document.getElementById("message").value.trim();
-const status=document.getElementById("status");
+// ===== THEME TOGGLE =====
+const toggle = document.getElementById("themeToggle");
 
-if(!name||!phone||!message){
-status.innerText="Isi semua field ❌";
-return;
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light");
+  toggle.innerText = "☀ Light";
 }
 
-status.innerText="Mengirim...";
+toggle.addEventListener("click", () => {
+  document.body.classList.toggle("light");
 
-const res=await fetch("/api/send",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({name,phone,message})
+  if (document.body.classList.contains("light")) {
+    localStorage.setItem("theme", "light");
+    toggle.innerText = "☀ Light";
+  } else {
+    localStorage.setItem("theme", "dark");
+    toggle.innerText = "🌙 Dark";
+  }
 });
 
-const data=await res.json();
+// ===== SEND MESSAGE =====
+document.getElementById("send").addEventListener("click", async () => {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const message = document.getElementById("message").value.trim();
+  const status = document.getElementById("status");
 
-if(data.success){
-status.innerText="Pesan terkirim 🎉";
-}else{
-status.innerText="Gagal kirim ❌";
-}
+  if (!name || !phone || !message) {
+    status.innerText = "Isi semua field ❌";
+    return;
+  }
+
+  status.innerText = "Mengirim...";
+
+  const res = await fetch("/api/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, phone, message })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    status.innerText = "Pesan terkirim 🎉";
+  } else {
+    status.innerText = "Gagal kirim ❌";
+  }
 });
 </script>
 
