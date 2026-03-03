@@ -1,14 +1,274 @@
 <!DOCTYPE html>
-<html>
-<head><title>Store - Hunter Soft Bot</title></head>
-<body style="background:#0f0f0f;color:white;font-family:Poppins;text-align:center;padding:40px">
-<h1>Paket Bot</h1>
-<div style="background:#1c1c1c;padding:20px;margin:20px auto;max-width:400px;border-radius:12px">
-<h2>Paket Premium</h2>
-<p>✔ Downloader<br>✔ Anti Spam<br>✔ Custom Menu</p>
-<p><b>Rp 50.000</b></p>
-<a href="https://wa.me/6283115384200?text=Saya%20ingin%20order%20Paket%20Premium" style="background:#C5FF83;padding:10px 20px;border-radius:8px;text-decoration:none;color:black">Order Sekarang</a>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store - Hunter Soft Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #4DA6FF;
+  --bg: #0f0f0f;
+  --card: #1c1c1c;
+  --text: #ffffff;
+}
+
+body.light {
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --text: #111111;
+}
+
+body {
+  margin: 0;
+  font-family: Poppins;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.3s;
+}
+
+/* CART ICON */
+#cartIcon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: var(--primary);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+}
+
+header {
+  text-align: center;
+  padding: 60px 20px 20px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.product {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.price {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  opacity: 0.6;
+  margin-right: 5px;
+}
+
+.newPrice {
+  color: green;
+  font-weight: bold;
+}
+
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* CART POPUP */
+#cartOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#cartBox {
+  background: var(--card);
+  width: 350px;
+  max-height: 450px;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+#voucherInput {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div id="cartIcon">🛒</div>
+
+<header>
+<h1>Hunter Soft Bot Store</h1>
+</header>
+
+<div class="products" id="productList"></div>
+
+<!-- CART POPUP -->
+<div id="cartOverlay">
+  <div id="cartBox">
+    <h3>Keranjang</h3>
+    <div id="cartItems"></div>
+
+    <input type="text" id="voucherInput" placeholder="Masukkan Kode Voucher">
+    <button onclick="applyVoucher()">Gunakan Promo</button>
+
+    <h3 id="totalPrice"></h3>
+    <button onclick="checkout()">Checkout via WhatsApp</button>
+  </div>
 </div>
-<a href="index.html" style="color:#C5FF83">Kembali</a>
+
+<footer>
+<a href="/">← Kembali ke Home</a>
+</footer>
+
+<script>
+// DARK MODE SYNC
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light");
+}
+
+// PRODUCTS
+const products = [
+  {name:"Paket Basic", price:30000},
+  {name:"Paket Premium", price:50000},
+  {name:"Paket Custom", price:80000},
+  {name:"Bot Reseller", price:100000},
+  {name:"Bot Downloader", price:45000},
+  {name:"Bot Auto Order", price:70000}
+];
+
+const vouchers = {
+  "PROMO10": 0.10,
+  "DISKON20": 0.20
+};
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let discount = parseFloat(localStorage.getItem("discount")) || 0;
+
+// SAVE FUNCTION
+function saveCart(){
+  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem("discount", discount);
+}
+
+// RENDER PRODUCTS
+const productList = document.getElementById("productList");
+
+products.forEach((p, index) => {
+  productList.innerHTML += `
+  <div class="product">
+    <h3>${p.name}</h3>
+    <div class="price">Rp ${p.price.toLocaleString()}</div>
+    <button onclick="addToCart(${index})">Masukkan Keranjang</button>
+  </div>
+  `;
+});
+
+function addToCart(index){
+  cart.push(products[index]);
+  saveCart();
+  alert("Produk masuk keranjang");
+}
+
+// CART POPUP
+const cartOverlay = document.getElementById("cartOverlay");
+document.getElementById("cartIcon").onclick = () => {
+  renderCart();
+  cartOverlay.style.display="flex";
+};
+
+cartOverlay.onclick = (e) => {
+  if(e.target===cartOverlay){
+    cartOverlay.style.display="none";
+  }
+};
+
+function renderCart(){
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML="";
+  let total=0;
+
+  cart.forEach((item, i)=>{
+    total+=item.price;
+    cartItems.innerHTML+=`
+      <div class="cartItem">
+        <span>${item.name}</span>
+        <span>Rp ${item.price.toLocaleString()}</span>
+      </div>
+    `;
+  });
+
+  if(discount>0){
+    let discounted = total - (total*discount);
+    document.getElementById("totalPrice").innerHTML =
+      `<span class="oldPrice">Rp ${total.toLocaleString()}</span>
+       <span class="newPrice">Rp ${discounted.toLocaleString()}</span>`;
+  } else {
+    document.getElementById("totalPrice").innerText =
+      "Total: Rp "+total.toLocaleString();
+  }
+}
+
+function applyVoucher(){
+  const code = document.getElementById("voucherInput").value.toUpperCase();
+  if(vouchers[code]){
+    discount = vouchers[code];
+    saveCart();
+    alert("Voucher berhasil digunakan!");
+    renderCart();
+  } else {
+    alert("Voucher tidak valid!");
+  }
+}
+
+function checkout(){
+  let message="Saya ingin order:%0A";
+  cart.forEach(item=>{
+    message+=`- ${item.name}%0A`;
+  });
+
+  let total=cart.reduce((sum,item)=>sum+item.price,0);
+  if(discount>0){
+    total = total-(total*discount);
+  }
+
+  message+=`Total: Rp ${total}`;
+  window.open(`https://wa.me/6283115384200?text=${message}`);
+}
+</script>
+
 </body>
 </html>
