@@ -199,6 +199,41 @@ footer {
   opacity: 0.6;
   font-size: 13px;
 }
+
+.infoItem {
+  margin-top: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.infoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.arrow {
+  transition: 0.3s;
+}
+
+.infoContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.3s ease;
+  font-size: 14px;
+  opacity: 0.85;
+  margin-top: 5px;
+}
+
+.infoItem.active .infoContent {
+  max-height: 200px;
+}
+
+.infoItem.active .arrow {
+  transform: rotate(90deg);
+}
 </style>
 </head>
 
@@ -237,6 +272,51 @@ footer {
   <textarea id="message" rows="4" placeholder="Message"></textarea>
   <button id="send">Send Message</button>
   <p id="status"></p>
+</div>
+
+</div>
+
+<!-- INFO SECTION -->
+<div class="card">
+  <h2>Tentang Hunter Soft Bot</h2>
+
+  <div class="infoItem">
+    <div class="infoHeader">
+      <span>Apa itu Hunter Soft Bot?</span>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="infoContent">
+      Hunter Soft Bot adalah layanan bot otomatis untuk WhatsApp & Telegram
+      dengan fitur downloader, auto order, dan sistem store modern.
+    </div>
+  </div>
+
+  <div class="infoItem">
+    <div class="infoHeader">
+      <span>Kenapa memilih kami?</span>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="infoContent">
+      Kami menyediakan sistem stabil, fast response, support aktif,
+      dan update berkala untuk menjaga performa bot tetap optimal.
+    </div>
+  </div>
+
+  <div class="infoItem">
+    <div class="infoHeader">
+      <span>Fitur yang tersedia</span>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="infoContent">
+      ✔ TikTok Downloader  
+      ✔ Sistem Store + Voucher  
+      ✔ Auto Order  
+      ✔ Custom Menu  
+      ✔ Anti Delay System  
+      ✔ Dan banyak fitur lainnya
+    </div>
+  </div>
+
 </div>
 
 <footer>
@@ -346,6 +426,18 @@ document.getElementById("send").addEventListener("click", async () => {
   } else {
     status.innerText = "Gagal kirim ❌";
   }
+});
+
+// INFO ACCORDION
+document.querySelectorAll(".infoItem").forEach(item => {
+  item.addEventListener("click", () => {
+
+    document.querySelectorAll(".infoItem").forEach(i => {
+      if (i !== item) i.classList.remove("active");
+    });
+
+    item.classList.toggle("active");
+  });
 });
 </script>
 
