@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hunter Soft Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+<style>
+body{margin:0;font-family:Poppins;background:#0f0f0f;color:white}
+header{text-align:center;padding:40px}
+.card{background:#1c1c1c;margin:20px auto;padding:25px;border-radius:12px;max-width:500px;position:relative}
+.card:before{content:'';position:absolute;left:0;top:0;height:100%;width:6px;background:#C5FF83;border-radius:12px 0 0 12px}
+.btn{display:block;text-align:center;padding:12px;margin-top:10px;border-radius:8px;background:#C5FF83;color:black;text-decoration:none;font-weight:600}
+.btn:hover{background:white}
+input,textarea{width:100%;padding:10px;margin:8px 0;background:#222;border:1px solid #333;border-radius:6px;color:white}
+button{width:100%;padding:12px;border:none;border-radius:8px;background:#C5FF83;font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:20px;opacity:.6}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Hunter Soft Bot</h1>
+<p>Layanan Bot WhatsApp & Telegram</p>
+</header>
+
+<div class="card">
+<h2>Order Bot</h2>
+<a href="store.html" class="btn">Lihat Paket</a>
+</div>
+
+<div class="card">
+<h2>Tools</h2>
+<a href="tools.html" class="btn">Gunakan Tools</a>
+</div>
+
+<div class="card">
+<h2>Contact Owner</h2>
+<input type="text" id="name" placeholder="Username">
+<input type="text" id="phone" placeholder="WA Number">
+<textarea id="message" rows="4" placeholder="Message"></textarea>
+<button id="send">Send Message</button>
+<p id="status"></p>
+</div>
+
+<footer>Powered by Vercel • GitHub Ready</footer>
+
+<script>
+document.getElementById("send").addEventListener("click", async ()=>{
+const name=document.getElementById("name").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const message=document.getElementById("message").value.trim();
+const status=document.getElementById("status");
+
+if(!name||!phone||!message){
+status.innerText="Isi semua field ❌";
+return;
+}
+
+status.innerText="Mengirim...";
+
+const res=await fetch("/api/send",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({name,phone,message})
+});
+
+const data=await res.json();
+
+if(data.success){
+status.innerText="Pesan terkirim 🎉";
+}else{
+status.innerText="Gagal kirim ❌";
+}
+});
+</script>
+
+</body>
+</html>
