@@ -29,13 +29,14 @@ body {
 }
 
 /* THEME SWITCH (KANAN) */
+/* THEME SWITCH (KANAN) */
 #themeToggle {
   position: fixed;
   top: 20px;
   right: 20px;
   width: 60px;
   height: 30px;
-  background: var(--card);
+  background: var(--primary); /* biru */
   border-radius: 20px;
   padding: 3px;
   cursor: pointer;
@@ -48,17 +49,15 @@ body {
 #themeToggle .circle {
   width: 24px;
   height: 24px;
-  background: var(--primary);
+  background: white; /* default putih */
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
   transition: 0.3s;
 }
 
+/* kalau light mode */
 body.light #themeToggle .circle {
   transform: translateX(30px);
+  background: #111; /* hitam */
 }
 
 /* PROMO BUTTON (KIRI) */
