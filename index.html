@@ -41,6 +41,7 @@ body {
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: 0.3s;
   z-index: 999;
 }
 
@@ -77,10 +78,9 @@ body.light #themeToggle .circle {
 /* HEADER */
 header {
   text-align: center;
-  padding: 80px 20px 30px;
+  padding: 60px 20px 30px;
 }
 
-/* CARD STYLE (SEMUA SAMA) */
 .card {
   background: var(--card);
   margin: 20px auto;
@@ -101,24 +101,16 @@ header {
   border-radius: 12px 0 0 12px;
 }
 
-.card h2 {
-  margin-top: 0;
-}
-
-/* BUTTON STYLE SAMA */
-.cardBtn {
-  width: 100%;
+.btn {
+  display: block;
+  text-align: center;
   padding: 12px;
-  border: none;
+  margin-top: 10px;
   border-radius: 8px;
   background: var(--primary);
   color: white;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  display: block;
   text-decoration: none;
-  margin-top: 10px;
+  font-weight: 600;
 }
 
 input, textarea {
@@ -161,9 +153,12 @@ button {
 #promoBox {
   background: var(--card);
   width: 350px;
+  max-height: 420px;
   border-radius: 12px;
   padding: 20px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 #promoClose {
@@ -171,6 +166,31 @@ button {
   top: 10px;
   left: 10px;
   cursor: pointer;
+}
+
+#promoList {
+  margin-top: 30px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.promoItem {
+  background: var(--bg);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.promoItem a {
+  background: var(--primary);
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
 }
 
 footer {
@@ -223,7 +243,43 @@ footer {
 Powered by Vercel • GitHub Ready
 </footer>
 
+<!-- PROMO POPUP -->
+<div id="promoOverlay">
+  <div id="promoBox">
+    <div id="promoClose">✖</div>
+    <h2>🔥 Promo Hunter Soft Bot</h2>
+
+    <div id="promoList">
+      <div class="promoItem">
+        <p>🎉 Diskon 20% Paket Premium</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>🚀 Free Setup Bot</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>🔥 Bonus Custom Menu</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>💎 Hosting Gratis 1 Minggu</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>🎁 Paket Bundle Hemat</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+      <div class="promoItem">
+        <p>⚡ Diskon Khusus Member</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+// THEME SWITCH
 const toggle = document.getElementById("themeToggle");
 const icon = document.getElementById("themeIcon");
 
@@ -241,6 +297,54 @@ toggle.addEventListener("click", () => {
   } else {
     localStorage.setItem("theme", "dark");
     icon.innerText = "🌙";
+  }
+});
+
+// PROMO
+const promoBtn = document.getElementById("promoButton");
+const promoOverlay = document.getElementById("promoOverlay");
+const promoClose = document.getElementById("promoClose");
+
+promoBtn.addEventListener("click", () => {
+  promoOverlay.style.display = "flex";
+});
+
+promoClose.addEventListener("click", () => {
+  promoOverlay.style.display = "none";
+});
+
+promoOverlay.addEventListener("click", (e) => {
+  if (e.target === promoOverlay) {
+    promoOverlay.style.display = "none";
+  }
+});
+
+// SEND MESSAGE
+document.getElementById("send").addEventListener("click", async () => {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const message = document.getElementById("message").value.trim();
+  const status = document.getElementById("status");
+
+  if (!name || !phone || !message) {
+    status.innerText = "Isi semua field ❌";
+    return;
+  }
+
+  status.innerText = "Mengirim...";
+
+  const res = await fetch("/api/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, phone, message })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    status.innerText = "Pesan terkirim 🎉";
+  } else {
+    status.innerText = "Gagal kirim ❌";
   }
 });
 </script>
