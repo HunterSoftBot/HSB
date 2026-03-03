@@ -28,6 +28,7 @@ body {
   transition: 0.3s;
 }
 
+/* THEME BUTTON */
 #themeToggle {
   position: fixed;
   top: 20px;
@@ -39,17 +40,26 @@ body {
   cursor: pointer;
   font-size: 14px;
   z-index: 999;
-  transition: 0.3s;
 }
 
+/* PROMO BUTTON */
+#promoButton {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  background: var(--primary);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 999;
+}
+
+/* HEADER */
 header {
   text-align: center;
-  padding: 50px 20px 30px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 28px;
+  padding: 60px 20px 30px;
 }
 
 .card {
@@ -59,7 +69,6 @@ header h1 {
   border-radius: 12px;
   max-width: 500px;
   position: relative;
-  transition: 0.3s;
 }
 
 .card:before {
@@ -83,11 +92,6 @@ header h1 {
   color: white;
   text-decoration: none;
   font-weight: 600;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  opacity: 0.8;
 }
 
 input, textarea {
@@ -109,17 +113,65 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  opacity: 0.8;
 }
 
 #status {
   margin-top: 10px;
   font-size: 14px;
-  opacity: 0.8;
+}
+
+/* PROMO OVERLAY */
+#promoOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#promoBox {
+  background: var(--card);
+  width: 350px;
+  max-height: 420px;
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+#promoClose {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+}
+
+#promoList {
+  margin-top: 30px;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.promoItem {
+  background: var(--bg);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.promoItem a {
+  background: var(--primary);
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 13px;
 }
 
 footer {
@@ -134,6 +186,7 @@ footer {
 <body>
 
 <div id="themeToggle">🌙 Dark</div>
+<div id="promoButton">🎁 Promo</div>
 
 <header>
   <h1>Hunter Soft Bot</h1>
@@ -163,8 +216,50 @@ footer {
 Powered by Vercel • GitHub Ready
 </footer>
 
+<!-- PROMO POPUP -->
+<div id="promoOverlay">
+  <div id="promoBox">
+    <div id="promoClose">✖</div>
+    <h2>🔥 Promo Hunter Soft Bot</h2>
+
+    <div id="promoList">
+
+      <div class="promoItem">
+        <p>🎉 Diskon 20% Paket Premium</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+
+      <div class="promoItem">
+        <p>🚀 Free Setup Bot</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+
+      <div class="promoItem">
+        <p>🔥 Bonus Custom Menu</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+
+      <div class="promoItem">
+        <p>💎 Hosting Gratis 1 Minggu</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+
+      <div class="promoItem">
+        <p>🎁 Paket Bundle Hemat</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+
+      <div class="promoItem">
+        <p>⚡ Diskon Khusus Member</p>
+        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script>
-// ===== THEME TOGGLE =====
+// THEME TOGGLE
 const toggle = document.getElementById("themeToggle");
 
 if (localStorage.getItem("theme") === "light") {
@@ -184,7 +279,26 @@ toggle.addEventListener("click", () => {
   }
 });
 
-// ===== SEND MESSAGE =====
+// PROMO POPUP
+const promoBtn = document.getElementById("promoButton");
+const promoOverlay = document.getElementById("promoOverlay");
+const promoClose = document.getElementById("promoClose");
+
+promoBtn.addEventListener("click", () => {
+  promoOverlay.style.display = "flex";
+});
+
+promoClose.addEventListener("click", () => {
+  promoOverlay.style.display = "none";
+});
+
+promoOverlay.addEventListener("click", (e) => {
+  if (e.target === promoOverlay) {
+    promoOverlay.style.display = "none";
+  }
+});
+
+// SEND MESSAGE
 document.getElementById("send").addEventListener("click", async () => {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
