@@ -7,185 +7,167 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --primary: #4DA6FF;
-  --bg: #0f0f0f;
-  --card: #1c1c1c;
-  --text: #ffffff;
+:root{
+  --primary:#4DA6FF;
+  --bg:#0f0f0f;
+  --card:#1c1c1c;
+  --text:#ffffff;
 }
 
-body.light {
-  --bg: #f5f7fa;
-  --card: #ffffff;
-  --text: #111111;
+body.light{
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#111111;
 }
 
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  transition: 0.3s;
-}
-
-/* THEME BUTTON */
-#themeToggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: var(--primary);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  z-index: 999;
-}
-
-/* PROMO BUTTON */
-#promoButton {
-  position: fixed;
-  top: 60px;
-  right: 20px;
-  background: var(--primary);
-  color: white;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  z-index: 999;
+body{
+  margin:0;
+  font-family:Poppins;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
 }
 
 /* HEADER */
-header {
-  text-align: center;
-  padding: 60px 20px 30px;
+header{
+  text-align:center;
+  padding:80px 20px 20px;
 }
 
-.card {
-  background: var(--card);
-  margin: 20px auto;
-  padding: 25px;
-  border-radius: 12px;
-  max-width: 500px;
-  position: relative;
+header h1{
+  margin:0;
 }
 
-.card:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 6px;
-  background: var(--primary);
-  border-radius: 12px 0 0 12px;
+/* TOGGLE SWITCH */
+.themeSwitch{
+  position:fixed;
+  top:20px;
+  left:20px;
+  width:60px;
+  height:30px;
+  background:var(--card);
+  border-radius:20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  padding:3px;
+  transition:.3s;
 }
 
-.btn {
-  display: block;
-  text-align: center;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  background: var(--primary);
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
+.switchCircle{
+  width:24px;
+  height:24px;
+  background:var(--primary);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  transition:.3s;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  background: transparent;
-  border: 1px solid #333;
-  border-radius: 6px;
-  color: var(--text);
+body.light .switchCircle{
+  transform:translateX(30px);
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: var(--primary);
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
+/* PROMO BUTTON */
+#promoButton{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:var(--primary);
+  color:white;
+  padding:8px 15px;
+  border-radius:20px;
+  cursor:pointer;
 }
 
-#status {
-  margin-top: 10px;
-  font-size: 14px;
+/* NAV BUTTONS */
+.navButtons{
+  text-align:center;
+  margin-top:20px;
 }
 
-/* PROMO OVERLAY */
-#promoOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+.navButtons a{
+  display:inline-block;
+  margin:10px;
+  padding:10px 20px;
+  background:var(--primary);
+  color:white;
+  border-radius:8px;
+  text-decoration:none;
 }
 
-#promoBox {
-  background: var(--card);
-  width: 350px;
-  max-height: 420px;
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+/* INFO BOX */
+.infoSection{
+  max-width:700px;
+  margin:40px auto;
+  padding:0 20px;
 }
 
-#promoClose {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  cursor: pointer;
+.infoBox{
+  background:var(--card);
+  padding:20px;
+  margin-bottom:15px;
+  border-radius:12px;
+  position:relative;
+  cursor:pointer;
+  transition:.3s;
 }
 
-#promoList {
-  margin-top: 30px;
-  overflow-y: auto;
-  max-height: 300px;
+.infoBox:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:6px;
+  height:100%;
+  background:var(--primary);
+  border-radius:12px 0 0 12px;
 }
 
-.promoItem {
-  background: var(--bg);
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.infoHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.promoItem a {
-  background: var(--primary);
-  padding: 5px 10px;
-  border-radius: 6px;
-  color: white;
-  text-decoration: none;
-  font-size: 13px;
+.arrow{
+  transition:.3s;
 }
 
-footer {
-  text-align: center;
-  padding: 30px;
-  opacity: 0.6;
-  font-size: 13px;
+.infoContent{
+  max-height:0;
+  overflow:hidden;
+  transition:.3s;
+  font-size:14px;
+  margin-top:10px;
+  opacity:.8;
+}
+
+.infoBox.active .infoContent{
+  max-height:200px;
+}
+
+.infoBox.active .arrow{
+  transform:rotate(90deg);
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  opacity:.6;
 }
 </style>
 </head>
 
 <body>
 
-<div id="themeToggle">🌙 Dark</div>
+<div class="themeSwitch" onclick="toggleTheme()">
+  <div class="switchCircle" id="switchIcon">🌙</div>
+</div>
+
 <div id="promoButton">🎁 Promo</div>
 
 <header>
@@ -193,139 +175,85 @@ footer {
   <p>Layanan Bot WhatsApp & Telegram</p>
 </header>
 
-<div class="card">
-  <h2>Store</h2>
-  <a href="/store" class="btn">Lihat Paket</a>
+<div class="navButtons">
+  <a href="/store">Store</a>
+  <a href="/tools">Tools</a>
 </div>
 
-<div class="card">
-  <h2>Tools</h2>
-  <a href="/tools" class="btn">Gunakan Tools</a>
-</div>
+<!-- INFO SECTION -->
+<div class="infoSection">
 
-<div class="card">
-  <h2>Contact Owner</h2>
-  <input type="text" id="name" placeholder="Username">
-  <input type="text" id="phone" placeholder="WA Number">
-  <textarea id="message" rows="4" placeholder="Message"></textarea>
-  <button id="send">Send Message</button>
-  <p id="status"></p>
+  <div class="infoBox" onclick="toggleInfo(this)">
+    <div class="infoHeader">
+      <strong>Tentang Hunter Soft Bot</strong>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="infoContent">
+      Hunter Soft Bot adalah layanan bot otomatis untuk WhatsApp & Telegram 
+      dengan fitur downloader, auto order, reseller, dan banyak lagi.
+    </div>
+  </div>
+
+  <div class="infoBox" onclick="toggleInfo(this)">
+    <div class="infoHeader">
+      <strong>Kenapa Pilih Kami?</strong>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="infoContent">
+      Kami menyediakan bot stabil, fast response, support aktif,
+      dan sistem yang terus diperbarui secara berkala.
+    </div>
+  </div>
+
+  <div class="infoBox" onclick="toggleInfo(this)">
+    <div class="infoHeader">
+      <strong>Fitur Unggulan</strong>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="infoContent">
+      Downloader TikTok, Auto Order, Anti Delay, Custom Menu,
+      Sistem Store, Voucher, dan Tools premium lainnya.
+    </div>
+  </div>
+
 </div>
 
 <footer>
-Powered by Vercel • GitHub Ready
+Hunter Soft Bot © 2026
 </footer>
 
-<!-- PROMO POPUP -->
-<div id="promoOverlay">
-  <div id="promoBox">
-    <div id="promoClose">✖</div>
-    <h2>🔥 Promo Hunter Soft Bot</h2>
-
-    <div id="promoList">
-
-      <div class="promoItem">
-        <p>🎉 Diskon 20% Paket Premium</p>
-        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
-      </div>
-
-      <div class="promoItem">
-        <p>🚀 Free Setup Bot</p>
-        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
-      </div>
-
-      <div class="promoItem">
-        <p>🔥 Bonus Custom Menu</p>
-        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
-      </div>
-
-      <div class="promoItem">
-        <p>💎 Hosting Gratis 1 Minggu</p>
-        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
-      </div>
-
-      <div class="promoItem">
-        <p>🎁 Paket Bundle Hemat</p>
-        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
-      </div>
-
-      <div class="promoItem">
-        <p>⚡ Diskon Khusus Member</p>
-        <a href="https://wa.me/6283115384200" target="_blank">Cek</a>
-      </div>
-
-    </div>
-  </div>
-</div>
-
 <script>
-// THEME TOGGLE
-const toggle = document.getElementById("themeToggle");
-
-if (localStorage.getItem("theme") === "light") {
-  document.body.classList.add("light");
-  toggle.innerText = "☀ Light";
-}
-
-toggle.addEventListener("click", () => {
+// THEME
+function toggleTheme(){
   document.body.classList.toggle("light");
 
-  if (document.body.classList.contains("light")) {
-    localStorage.setItem("theme", "light");
-    toggle.innerText = "☀ Light";
-  } else {
-    localStorage.setItem("theme", "dark");
-    toggle.innerText = "🌙 Dark";
+  const icon=document.getElementById("switchIcon");
+
+  if(document.body.classList.contains("light")){
+    icon.innerHTML="☀️";
+    localStorage.setItem("theme","light");
+  }else{
+    icon.innerHTML="🌙";
+    localStorage.setItem("theme","dark");
   }
-});
+}
 
-// PROMO POPUP
-const promoBtn = document.getElementById("promoButton");
-const promoOverlay = document.getElementById("promoOverlay");
-const promoClose = document.getElementById("promoClose");
+// LOAD THEME
+if(localStorage.getItem("theme")==="light"){
+  document.body.classList.add("light");
+  document.getElementById("switchIcon").innerHTML="☀️";
+}
 
-promoBtn.addEventListener("click", () => {
-  promoOverlay.style.display = "flex";
-});
-
-promoClose.addEventListener("click", () => {
-  promoOverlay.style.display = "none";
-});
-
-promoOverlay.addEventListener("click", (e) => {
-  if (e.target === promoOverlay) {
-    promoOverlay.style.display = "none";
-  }
-});
-
-// SEND MESSAGE
-document.getElementById("send").addEventListener("click", async () => {
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const message = document.getElementById("message").value.trim();
-  const status = document.getElementById("status");
-
-  if (!name || !phone || !message) {
-    status.innerText = "Isi semua field ❌";
-    return;
-  }
-
-  status.innerText = "Mengirim...";
-
-  const res = await fetch("/api/send", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, phone, message })
+// INFO TOGGLE
+function toggleInfo(element){
+  document.querySelectorAll(".infoBox").forEach(box=>{
+    if(box!==element){
+      box.classList.remove("active");
+    }
   });
 
-  const data = await res.json();
-
-  if (data.success) {
-    status.innerText = "Pesan terkirim 🎉";
-  } else {
-    status.innerText = "Gagal kirim ❌";
-  }
-});
+  element.classList.toggle("active");
+}
 </script>
 
 </body>
