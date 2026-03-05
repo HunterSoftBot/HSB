@@ -63,7 +63,7 @@ body.light #themeToggle .circle {
 /* PROMO BUTTON (KIRI) */
 #promoButton {
   position: fixed;
-  top: 70px;
+  top: 20px;
   left: 20px;
   background: var(--primary);
   color: white;
@@ -262,10 +262,10 @@ footer {
 
 <body>
 
-<div id="promoButton">🎁 Promo</div>
+<div id="promoButton">Promo</div>
 
 <div id="themeToggle">
-  <div class="circle" id="themeIcon">🌙</div>
+  <div class="circle" id="themeIcon"></div>
 </div>
 
 <header>
@@ -400,7 +400,7 @@ const icon = document.getElementById("themeIcon");
 
 if (localStorage.getItem("theme") === "light") {
   document.body.classList.add("light");
-  icon.innerText = "☀️";
+  icon.innerText = "";
 }
 
 toggle.addEventListener("click", () => {
@@ -408,10 +408,10 @@ toggle.addEventListener("click", () => {
 
   if (document.body.classList.contains("light")) {
     localStorage.setItem("theme", "light");
-    icon.innerText = "☀️";
+    icon.innerText = "";
   } else {
     localStorage.setItem("theme", "dark");
-    icon.innerText = "🌙";
+    icon.innerText = "";
   }
 });
 
