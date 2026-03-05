@@ -1,0 +1,219 @@
+
+:root{
+--primary:#4DA6FF;
+--bg:#0f0f0f;
+--card:#1c1c1c;
+--text:#fff;
+}
+
+body.light{
+--bg:#f5f7fa;
+--card:#ffffff;
+--text:#111;
+}
+
+body{
+margin:0;
+font-family:Poppins,Arial;
+background:var(--bg);
+color:var(--text);
+transition:.3s;
+}
+
+/* header */
+header{
+text-align:center;
+padding:60px 20px 20px;
+}
+
+/* cards */
+.card{
+background:var(--card);
+margin:20px auto;
+padding:25px;
+border-radius:12px;
+max-width:520px;
+position:relative;
+}
+
+.card:before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:6px;
+height:100%;
+background:var(--primary);
+border-radius:12px 0 0 12px;
+}
+
+/* buttons */
+.btn{
+display:block;
+text-align:center;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+background:var(--primary);
+color:white;
+text-decoration:none;
+font-weight:600;
+}
+
+/* inputs */
+input,textarea{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:6px;
+border:1px solid #333;
+background:transparent;
+color:var(--text);
+box-sizing:border-box;
+}
+
+/* sidebar */
+#menuBtn{
+position:fixed;
+top:20px;
+left:20px;
+font-size:26px;
+cursor:pointer;
+z-index:1002;
+}
+
+#sidebar{
+position:fixed;
+top:0;
+left:-240px;
+width:220px;
+height:100%;
+background:var(--card);
+padding-top:80px;
+transition:.3s;
+z-index:1003;
+}
+
+#sidebar a{
+display:block;
+padding:14px 20px;
+color:var(--text);
+text-decoration:none;
+font-weight:600;
+}
+
+#sidebar a:hover{
+background:rgba(0,0,0,.1);
+}
+
+#sidebarOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.4);
+display:none;
+z-index:1001;
+}
+
+/* theme switch */
+#themeToggle{
+position:fixed;
+right:20px;
+top:20px;
+width:60px;
+height:30px;
+background:var(--primary);
+border-radius:20px;
+padding:3px;
+cursor:pointer;
+z-index:1000;
+}
+
+.circle{
+width:24px;
+height:24px;
+background:white;
+border-radius:50%;
+transition:.3s;
+}
+
+body.light .circle{
+transform:translateX(30px);
+background:#111;
+}
+
+/* promo button center */
+#promoButton{
+position:fixed;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+background:var(--primary);
+padding:8px 15px;
+border-radius:20px;
+cursor:pointer;
+color:white;
+z-index:1000;
+}
+
+/* promo modal */
+#promoOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.6);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+#promoBox{
+background:var(--card);
+padding:20px;
+width:350px;
+border-radius:12px;
+max-height:400px;
+overflow:auto;
+}
+
+/* cart badge */
+#cartBadge{
+position:fixed;
+right:20px;
+bottom:90px;
+background:var(--primary);
+width:40px;
+height:40px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+}
+
+/* whatsapp float */
+.waFloat{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.qtyBox{
+display:flex;
+gap:10px;
+align-items:center;
+margin-top:10px;
+}
+
+.qtyBox button{
+width:30px;
+height:30px;
+}
