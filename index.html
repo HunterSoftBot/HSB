@@ -258,19 +258,26 @@ footer {
   transform: scale(1.1);
 }
 
-/* INTRO LOADING */
+/* INTRO OVERLAY */
 #intro{
   position:fixed;
   inset:0;
+  backdrop-filter:blur(10px);
   display:flex;
-  flex-direction:column;
   justify-content:center;
   align-items:center;
-  background:transparent;
+  flex-direction:column;
   z-index:99999;
+  overflow:hidden;
+  transition:0.8s;
 }
 
-/* SPINNER */
+.centerIntro{
+  text-align:center;
+  z-index:2;
+}
+
+/* LOADER */
 .loader{
   width:50px;
   height:50px;
@@ -278,40 +285,38 @@ footer {
   border-top:4px solid var(--primary);
   border-radius:50%;
   animation:spin 1s linear infinite;
-  margin-bottom:15px;
+  margin:auto;
 }
 
 @keyframes spin{
   to{transform:rotate(360deg);}
 }
 
-/* WELCOME BERJALAN */
+/* TEXT */
 .welcomeText{
-  overflow:hidden;
-  white-space:nowrap;
+  margin-top:15px;
+  font-size:22px;
+  font-weight:600;
 }
 
-.welcomeText span{
-  display:inline-block;
-  padding-left:100%;
-  animation:scrollText 4s linear forwards;
-  font-size:18px;
-}
-
-@keyframes scrollText{
-  from{transform:translateX(0)}
-  to{transform:translateX(-100%)}
+/* PARTICLES CANVAS */
+#particles{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
 }
 </style>
 </head>
 
 <body>
-
+    
 <div id="intro">
-  <div class="loader"></div>
-  <div class="welcomeText">
-    <span>Welcome</span>
+  <div class="centerIntro">
+    <div class="loader"></div>
+    <div class="welcomeText">WELCOME</div>
   </div>
+
+  <canvas id="particles"></canvas>
 </div>
 
 <div id="promoButton">Promo</div>
@@ -527,15 +532,66 @@ document.querySelectorAll(".infoItem").forEach(item => {
   });
 });
 
-setTimeout(() => {
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createExplosion(){
+  for(let i=0;i<80;i++){
+    particles.push({
+      x:canvas.width/2,
+      y:canvas.height/2,
+      vx:(Math.random()-0.5)*8,
+      vy:(Math.random()-0.5)*8,
+      size:Math.random()*4+2,
+      life:100
+    });
+  }
+}
+
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach((p,index)=>{
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.05;
+    p.life--;
+
+    ctx.fillStyle="white";
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fill();
+
+    if(p.life<=0){
+      particles.splice(index,1);
+    }
+  });
+
+  requestAnimationFrame(drawParticles);
+}
+
+drawParticles();
+
+/* LOADING SEQUENCE */
+
+setTimeout(()=>{
+  createExplosion();
+},2500);
+
+setTimeout(()=>{
   const intro = document.getElementById("intro");
-  intro.style.opacity = "0";
+  intro.style.opacity="0";
 
   setTimeout(()=>{
     intro.remove();
-  },500);
+  },800);
 
-},4000);
+},4500);
 </script>
 
 </body>
