@@ -199,12 +199,66 @@ footer{
   padding:30px;
   opacity:.6;
 }
+
+/* HAMBURGER BUTTON */
+#menuBtn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  font-size:24px;
+  cursor:pointer;
+  z-index:1001;
+}
+
+/* SIDEBAR */
+#sidebar{
+  position:fixed;
+  top:0;
+  left:-220px;
+  width:200px;
+  height:100%;
+  background:var(--card);
+  padding-top:80px;
+  transition:0.3s;
+  z-index:1002;
+}
+
+#sidebar a{
+  display:block;
+  padding:15px 20px;
+  color:var(--text);
+  text-decoration:none;
+  font-weight:600;
+}
+
+#sidebar a:hover{
+  background:rgba(0,0,0,0.1);
+}
+
+/* OVERLAY */
+#sidebarOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  display:none;
+  z-index:1000;
+}
 </style>
 </head>
 
 <body>
 
-<a href="/" id="backBtn">← Kembali</a>
+<!-- HAMBURGER MENU -->
+<div id="menuBtn">☰</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <a href="/store">Store</a>
+  <a href="/tools">Tools</a>
+  <a href="/">Kembali</a>
+</div>
+
+<div id="sidebarOverlay"></div>
 
 <div id="cartIcon">
   🛒
@@ -439,6 +493,21 @@ function checkout(){
 
   window.open(`https://wa.me/6283115384200?text=${message}`);
 }
+
+// SIDEBAR MENU
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+menuBtn.addEventListener("click",()=>{
+  sidebar.style.left="0";
+  sidebarOverlay.style.display="block";
+});
+
+sidebarOverlay.addEventListener("click",()=>{
+  sidebar.style.left="-220px";
+  sidebarOverlay.style.display="none";
+});
 </script>
 
 </body>
