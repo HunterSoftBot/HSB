@@ -1,514 +1,69 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Store - Hunter Soft Bot</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --primary:#4DA6FF;
-  --bg:#0f0f0f;
-  --card:#1c1c1c;
-  --text:#ffffff;
-}
-
-body.light{
-  --bg:#f5f7fa;
-  --card:#ffffff;
-  --text:#111111;
-}
-
-body{
-  margin:0;
-  font-family:Poppins;
-  background:var(--bg);
-  color:var(--text);
-  transition:.3s;
-}
-
-/* BUTTONS */
-#backBtn{
-  position:fixed;
-  top:20px;
-  left:20px;
-  background:var(--primary);
-  color:white;
-  padding:8px 14px;
-  border-radius:20px;
-  text-decoration:none;
-}
-
-#cartIcon{
-  position:fixed;
-  top:20px;
-  right:20px;
-  background:var(--primary);
-  color:white;
-  padding:10px;
-  border-radius:50%;
-  cursor:pointer;
-}
-
-#cartCount{
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:red;
-  color:white;
-  font-size:12px;
-  padding:2px 6px;
-  border-radius:50%;
-}
-
-/* HEADER */
-header{
-  text-align:center;
-  padding:70px 20px 10px;
-}
-
-/* PRODUCTS */
-.products{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  padding:20px;
-  max-width:900px;
-  margin:auto;
-}
-
-.product{
-  background:var(--card);
-  padding:20px;
-  border-radius:12px;
-  text-align:center;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-}
-
-.price{
-  margin:10px 0;
-  font-weight:600;
-}
-
-.qtyControl{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.qtyControl button{
-  width:30px;
-  height:30px;
-  border:none;
-  border-radius:6px;
-  background:var(--primary);
-  color:white;
-  cursor:pointer;
-}
-
-.addBtn{
-  background:var(--primary);
-  border:none;
-  padding:8px;
-  border-radius:8px;
-  color:white;
-  cursor:pointer;
-}
-
-/* CART */
-#cartOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
-}
-
-#cartBox{
-  background:var(--card);
-  width:380px;
-  max-height:520px;
-  border-radius:12px;
-  padding:20px;
-  overflow-y:auto;
-}
-
-.cartItem{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-  font-size:14px;
-}
-
-.removeBtn{
-  color:red;
-  cursor:pointer;
-}
-
-.total{
-  font-weight:bold;
-  margin-top:10px;
-}
-
-.oldPrice{
-  text-decoration:line-through;
-  opacity:.6;
-  margin-right:5px;
-}
-
-.newPrice{
-  color:green;
-  font-weight:bold;
-}
-
-.voucherInfo{
-  font-size:13px;
-  margin-top:5px;
-  color:lime;
-}
-
-.checkoutBtn{
-  background:var(--primary);
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  color:white;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.clearBtn{
-  background:red;
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  color:white;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-footer{
-  text-align:center;
-  padding:30px;
-  opacity:.6;
-}
-
-/* HAMBURGER BUTTON */
-#menuBtn{
-  position:fixed;
-  top:20px;
-  left:20px;
-  font-size:24px;
-  cursor:pointer;
-  z-index:1001;
-}
-
-/* SIDEBAR */
-#sidebar{
-  position:fixed;
-  top:0;
-  left:-220px;
-  width:200px;
-  height:100%;
-  background:var(--card);
-  padding-top:80px;
-  transition:0.3s;
-  z-index:1002;
-}
-
-#sidebar a{
-  display:block;
-  padding:15px 20px;
-  color:var(--text);
-  text-decoration:none;
-  font-weight:600;
-}
-
-#sidebar a:hover{
-  background:rgba(0,0,0,0.1);
-}
-
-/* OVERLAY */
-#sidebarOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.4);
-  display:none;
-  z-index:1000;
-}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Store</title>
+<link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
 
-<!-- HAMBURGER MENU -->
 <div id="menuBtn">☰</div>
 
-<!-- SIDEBAR -->
 <div id="sidebar">
-  <a href="/store">Store</a>
-  <a href="/tools">Tools</a>
-  <a href="/">Kembali</a>
+<a href="/">Menu Utama</a>
+<a href="/store">Store</a>
+<a href="/tools">Tools</a>
+<a href="https://wa.me/">WhatsApp</a>
+<a href="https://t.me/">Telegram</a>
 </div>
 
 <div id="sidebarOverlay"></div>
 
-<div id="cartIcon">
-  🛒
-  <div id="cartCount">0</div>
-</div>
+<div id="promoButton">Promo</div>
+
+<div id="themeToggle"><div class="circle"></div></div>
+
+<div id="cartBadge">0</div>
 
 <header>
 <h1>Hunter Store</h1>
-<p>Silahkan di order. pembayaran saat ini masih manual dan akan di alihkan ke WhatsApp owner/admin.</p>
 </header>
 
-<div class="products" id="productList"></div>
+<div class="card">
 
-<!-- CART -->
-<div id="cartOverlay">
-  <div id="cartBox">
-    <h3>Keranjang</h3>
-    <div id="cartItems"></div>
+<h3>Paket Bot</h3>
+<p>Rp 100000</p>
 
-    <input type="text" id="voucherInput" placeholder="Masukkan Kode Voucher">
-    <button onclick="applyVoucher()">Gunakan Promo</button>
-
-    <div class="voucherInfo" id="voucherInfo"></div>
-
-    <div class="total" id="totalPrice"></div>
-
-    <button class="checkoutBtn" onclick="checkout()">Checkout via WhatsApp</button>
-    <button class="clearBtn" onclick="clearCart()">Hapus Semua</button>
-  </div>
+<div class="qtyBox">
+<button onclick="qty--">-</button>
+<span id="qty">1</span>
+<button onclick="qty++">+</button>
 </div>
 
-<footer>
-Ian X Hunter Soft Bot © 2026
-</footer>
+<button onclick="addItem('Paket Bot',100000,1)">Tambah ke Keranjang</button>
 
-<script>
-// DARK MODE
-if(localStorage.getItem("theme")==="light"){
-  document.body.classList.add("light");
-}
+</div>
 
-// PRODUCTS
-const products=[
-{name:"Berlangganan Member VVIP Level 1",price:15000},
-{name:"Berlangganan Member VVIP Level 2",price:20000},
-{name:"Berlangganan Member VVIP Level 3",price:30000},
-{name:"Sewa Bot",price:10000},
-{name:"Upgrade Member Premium",price:5000},
-{name:"Beli Family Premium",price:25000}
-];
+<div class="card">
 
-// VOUCHERS (Manual Edit Here)
-const vouchers={
-  "HSB_COMEBACK":{
-    discount:0.50,
-    expires:"2026-06-31"
-  },
-  "DISKON20":{
-    discount:0.20,
-    expires:"2026-06-25"
-  }
-};
+<h3>Keranjang</h3>
 
-let cart=JSON.parse(localStorage.getItem("cart"))||[];
-let discount=parseFloat(localStorage.getItem("discount"))||0;
-let activeVoucher=localStorage.getItem("activeVoucher")||null;
+<div id="cartList"></div>
 
-// SAVE
-function saveCart(){
-  localStorage.setItem("cart",JSON.stringify(cart));
-  localStorage.setItem("discount",discount);
-  localStorage.setItem("activeVoucher",activeVoucher);
-  updateCartCount();
-}
+<p>Total: Rp <span id="total">0</span></p>
 
-// BADGE
-function updateCartCount(){
-  let totalQty=cart.reduce((sum,item)=>sum+item.qty,0);
-  document.getElementById("cartCount").innerText=totalQty;
-}
-updateCartCount();
+<button onclick="checkout()">Checkout WhatsApp</button>
+<button onclick="clearCart()">Hapus Semua</button>
 
-// RENDER PRODUCTS
-const productList=document.getElementById("productList");
-let quantities={};
+</div>
 
-products.forEach((p,index)=>{
-  quantities[index]=1;
-  productList.innerHTML+=`
-  <div class="product">
-    <h3>${p.name}</h3>
-    <div class="price">Rp ${p.price.toLocaleString()}</div>
-
-    <div class="qtyControl">
-      <button onclick="decrease(${index})">-</button>
-      <span id="qty-${index}">1</span>
-      <button onclick="increase(${index})">+</button>
-    </div>
-
-    <button class="addBtn" onclick="addToCart(${index})">
-      Masukkan Keranjang
-    </button>
-  </div>
-  `;
-});
-
-function increase(i){
-  quantities[i]++;
-  document.getElementById(`qty-${i}`).innerText=quantities[i];
-}
-
-function decrease(i){
-  if(quantities[i]>1){
-    quantities[i]--;
-    document.getElementById(`qty-${i}`).innerText=quantities[i];
-  }
-}
-
-function addToCart(index){
-  const existing=cart.find(item=>item.name===products[index].name);
-
-  if(existing){
-    existing.qty+=quantities[index];
-  }else{
-    cart.push({
-      name:products[index].name,
-      price:products[index].price,
-      qty:quantities[index]
-    });
-  }
-
-  saveCart();
-  alert("Produk ditambahkan!");
-}
-
-// CART
-const cartOverlay=document.getElementById("cartOverlay");
-document.getElementById("cartIcon").onclick=()=>{
-  renderCart();
-  cartOverlay.style.display="flex";
-};
-
-cartOverlay.onclick=(e)=>{
-  if(e.target===cartOverlay){
-    cartOverlay.style.display="none";
-  }
-};
-
-function renderCart(){
-  const cartItems=document.getElementById("cartItems");
-  cartItems.innerHTML="";
-  let total=0;
-
-  cart.forEach(item=>{
-    let sub=item.price*item.qty;
-    total+=sub;
-
-    cartItems.innerHTML+=`
-      <div class="cartItem">
-        <div>${item.name} × ${item.qty} : Rp ${sub.toLocaleString()}</div>
-      </div>
-    `;
-  });
-
-  let finalTotal=total;
-
-  if(discount>0){
-    finalTotal=total-(total*discount);
-    document.getElementById("totalPrice").innerHTML=
-      `<span class="oldPrice">Rp ${total.toLocaleString()}</span>
-       <span class="newPrice">Rp ${finalTotal.toLocaleString()}</span>`;
-  }else{
-    document.getElementById("totalPrice").innerText=
-      "Total: Rp "+total.toLocaleString();
-  }
-
-  if(activeVoucher){
-    document.getElementById("voucherInfo").innerText=
-      `Voucher ${activeVoucher} aktif (${discount*100}% diskon)`;
-  }else{
-    document.getElementById("voucherInfo").innerText="";
-  }
-}
-
-function applyVoucher(){
-  let code=document.getElementById("voucherInput").value.toUpperCase();
-
-  if(vouchers[code]){
-    let today=new Date();
-    let expireDate=new Date(vouchers[code].expires);
-
-    if(today<=expireDate){
-      discount=vouchers[code].discount;
-      activeVoucher=code;
-      saveCart();
-      alert("Voucher aktif! Diskon "+(discount*100)+"%");
-      renderCart();
-    }else{
-      alert("Voucher sudah expired!");
-    }
-  }else{
-    alert("Voucher tidak valid!");
-  }
-}
-
-function clearCart(){
-  if(confirm("Hapus semua produk?")){
-    cart=[];
-    discount=0;
-    activeVoucher=null;
-    saveCart();
-    renderCart();
-  }
-}
-
-function checkout(){
-  let message="Saya ingin order:%0A";
-  let total=0;
-
-  cart.forEach(item=>{
-    let sub=item.price*item.qty;
-    total+=sub;
-    message+=`- ${item.name} x${item.qty} (Rp ${sub})%0A`;
-  });
-
-  if(discount>0){
-    let newTotal=total-(total*discount);
-    message+=`Total setelah diskon: Rp ${newTotal}`;
-  }else{
-    message+=`Total: Rp ${total}`;
-  }
-
-  window.open(`https://wa.me/6283115384200?text=${message}`);
-}
-
-// SIDEBAR MENU
-const menuBtn = document.getElementById("menuBtn");
-const sidebar = document.getElementById("sidebar");
-const sidebarOverlay = document.getElementById("sidebarOverlay");
-
-menuBtn.addEventListener("click",()=>{
-  sidebar.style.left="0";
-  sidebarOverlay.style.display="block";
-});
-
-sidebarOverlay.addEventListener("click",()=>{
-  sidebar.style.left="-220px";
-  sidebarOverlay.style.display="none";
-});
-</script>
+<script src="/js/sidebar.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/promo.js"></script>
+<script src="/js/store.js"></script>
 
 </body>
 </html>
