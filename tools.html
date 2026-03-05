@@ -1,45 +1,194 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tools</title>
-<link rel="stylesheet" href="/css/style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools - Hunter Soft Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --primary:#4DA6FF;
+  --bg:#0f0f0f;
+  --card:#1c1c1c;
+  --text:#ffffff;
+}
+
+body.light{
+  --bg:#f5f7fa;
+  --card:#ffffff;
+  --text:#111111;
+}
+
+body{
+  margin:0;
+  font-family:Poppins;
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+}
+
+/* HEADER */
+#backBtn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:var(--primary);
+  color:white;
+  padding:8px 14px;
+  border-radius:20px;
+  text-decoration:none;
+}
+
+header{
+  text-align:center;
+  padding:70px 20px 20px;
+}
+
+.toolBox{
+  background:var(--card);
+  max-width:600px;
+  margin:20px auto;
+  padding:25px;
+  border-radius:12px;
+  position:relative;
+}
+
+.toolBox:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:6px;
+  height:100%;
+  background:var(--primary);
+  border-radius:12px 0 0 12px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:6px;
+  border:1px solid #333;
+  background:transparent;
+  color:var(--text);
+}
+
+button{
+  background:var(--primary);
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  color:white;
+  cursor:pointer;
+  width:100%;
+}
+
+.loading{
+  margin-top:15px;
+  text-align:center;
+  display:none;
+}
+
+video{
+  width:100%;
+  margin-top:15px;
+  border-radius:8px;
+}
+
+.downloadBtn{
+  margin-top:10px;
+  display:block;
+  text-align:center;
+  padding:10px;
+  background:green;
+  border-radius:8px;
+  color:white;
+  text-decoration:none;
+}
+
+.error{
+  color:red;
+  margin-top:10px;
+  text-align:center;
+}
+
+* {
+  box-sizing: border-box;
+}
+</style>
 </head>
 
 <body>
 
-<div id="menuBtn">☰</div>
-
-<div id="sidebar">
-<a href="/">Menu Utama</a>
-<a href="/store">Store</a>
-<a href="/tools">Tools</a>
-<a href="https://wa.me/">WhatsApp</a>
-<a href="https://t.me/">Telegram</a>
-</div>
-
-<div id="sidebarOverlay"></div>
-
-<div id="promoButton">Promo</div>
-
-<div id="themeToggle"><div class="circle"></div></div>
-
 <header>
-<h1>TikTok Downloader</h1>
+<h1>Tools</h1>
+<p>Download Video TikTok & InstaGram Tanpa Watermark</p>
 </header>
 
-<div class="card">
-<input id="ttlink" placeholder="Tempel link TikTok">
-<button onclick="downloadTikTok()">Download</button>
-<div id="result"></div>
+<div class="toolBox">
+  <h3>TikTok Downloader</h3>
+  <input type="text" id="tiktokUrl" placeholder="Masukkan link TikTok">
+  <button onclick="downloadTiktok()">Download</button>
+
+  <div class="loading" id="loading">Mengambil video...</div>
+  <div id="result"></div>
+  <div class="error" id="errorMsg"></div>
 </div>
 
-<script src="/js/sidebar.js"></script>
-<script src="/js/theme.js"></script>
-<script src="/js/promo.js"></script>
-<script src="/js/tools.js"></script>
+<script>
+// DARK MODE SYNC
+if(localStorage.getItem("theme")==="light"){
+  document.body.classList.add("light");
+}
+
+async function downloadTiktok(){
+  const url=document.getElementById("tiktokUrl").value.trim();
+  const loading=document.getElementById("loading");
+  const result=document.getElementById("result");
+  const errorMsg=document.getElementById("errorMsg");
+
+  result.innerHTML="";
+  errorMsg.innerText="";
+
+  if(!url){
+    errorMsg.innerText="Masukkan link terlebih dahulu.";
+    return;
+  }
+
+  loading.style.display="block";
+
+  try{
+    const res=await fetch("/api/tiktok",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({url})
+    });
+
+    const data=await res.json();
+
+    loading.style.display="none";
+
+    if(data.status){
+      const videoUrl=data.result.video[0];
+
+      result.innerHTML=`
+        <video controls src="${videoUrl}"></video>
+        <a href="${videoUrl}" download class="downloadBtn">
+          Unduh Video
+        </a>
+      `;
+    }else{
+      errorMsg.innerText="Terjadi kesalahan. Video tidak ditemukan.";
+    }
+
+  }catch(err){
+    loading.style.display="none";
+    errorMsg.innerText="Terjadi kesalahan server.";
+  }
+}
+</script>
 
 </body>
 </html>
