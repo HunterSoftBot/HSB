@@ -257,10 +257,81 @@ footer {
 .waFloat:hover {
   transform: scale(1.1);
 }
+
+/* INTRO OVERLAY */
+#intro{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:99999;
+}
+
+/* LOADING SPINNER */
+.loader{
+  width:50px;
+  height:50px;
+  border:4px solid rgba(255,255,255,0.2);
+  border-top:4px solid #4DA6FF;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin-bottom:20px;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+/* WELCOME TEXT BERJALAN */
+.welcomeText{
+  width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.welcomeText span{
+  display:inline-block;
+  padding-left:100%;
+  animation:scrollText 6s linear forwards;
+  font-size:18px;
+  color:white;
+}
+
+@keyframes scrollText{
+  from{transform:translateX(0)}
+  to{transform:translateX(-100%)}
+}
+
+/* VIDEO INTRO */
+#introVideo{
+  display:none;
+  max-width:80%;
+  border-radius:10px;
+}
 </style>
 </head>
 
 <body>
+
+<div id="intro">
+
+  <!-- LOADING -->
+  <div id="loadingScreen">
+    <div class="loader"></div>
+    <div class="welcomeText">
+      <span>Welcome To Hunter Soft Bot Website</span>
+    </div>
+  </div>
+
+  <!-- VIDEO INTRO -->
+  <video id="introVideo" muted>
+    <source src="/video/intro.mp4" type="video/mp4">
+  </video>
+
+</div>
 
 <div id="promoButton">Promo</div>
 
@@ -473,6 +544,30 @@ document.querySelectorAll(".infoItem").forEach(item => {
 
     item.classList.toggle("active");
   });
+});
+
+const video = document.getElementById("introVideo");
+const loading = document.getElementById("loadingScreen");
+const intro = document.getElementById("intro");
+
+/* setelah welcome selesai */
+setTimeout(() => {
+
+  loading.style.display = "none";
+  video.style.display = "block";
+  video.play();
+
+}, 6000);
+
+/* setelah video selesai masuk website */
+video.addEventListener("ended", () => {
+
+  intro.style.opacity = "0";
+
+  setTimeout(()=>{
+    intro.remove();
+  },500);
+
 });
 </script>
 
