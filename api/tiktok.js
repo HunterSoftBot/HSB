@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const apiUrl = `https://api.botcahx.eu.org/api/dowloader/tiktok?url=${encodeURIComponent(url)}&apikey=hunter@soft@bot.`;
+    const apiUrl = `https://api.botcahx.eu.org/api/dowloader/tiktok?url=${encodeURIComponent(url)}&apikey=${apiKey}`;
 
     const response = await fetch(apiUrl, {
       method: "GET",
